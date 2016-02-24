@@ -391,33 +391,33 @@ def calc_turb_rhi(radar, radius=1.0, verbose=False,
         beamwidth = radar.instrument_parameters['radar_beam_width_v']['data']
 
     index = 0
-#    while index < radar.nsweeps:
-#        if verbose:
-#            print('Sweep number:', index)
-#        ind_adj = index
-#        try:
-#            sweep_range = [radar.sweep_start_ray_index['data'][ind_adj],
-#                           radar.sweep_end_ray_index['data'][ind_adj]+1]
-#            turbulence[sweep_range[0]:sweep_range[1]] = \
-#                _calc_turb_rhi_sweep(
-#                    radar, index, radius=radius, verbose=verbose,
-#                    name_dz=name_dz, name_sw=name_sw,
-#                    use_ntda=use_ntda, beamwidth=beamwidth,
-#                    gate_spacing=gate_spacing)
-#        except IndexError:
-#            print('Ran out of sweeps')
-#        finally:
-#            index += 1
+    while index < radar.nsweeps:
+        if verbose:
+            print('Sweep number:', index)
+#ind_adj = index
+        try:
+            sweep_range = [radar.sweep_start_ray_index['data'][index],
+                           radar.sweep_end_ray_index['data'][index]+1]
+            turbulence[sweep_range[0]:sweep_range[1]] = \
+                _calc_turb_rhi_sweep(
+                    radar, index, radius=radius, verbose=verbose,
+                    name_dz=name_dz, name_sw=name_sw,
+                    use_ntda=use_ntda, beamwidth=beamwidth,
+                    gate_spacing=gate_spacing)
+        except IndexError:
+            print('Ran out of sweeps')
+        finally:
+            index += 1
 
-    sweep_range = [radar.sweep_start_ray_index['data'][0],
-               radar.sweep_end_ray_index['data'][0]+1]
-
-    turbulence[sweep_range[0]:sweep_range[1]] = \
-    _calc_turb_rhi_sweep(
-                         radar, index, radius=radius, verbose=verbose,
-                         name_dz=name_dz, name_sw=name_sw,
-                         use_ntda=use_ntda, beamwidth=beamwidth,
-                         gate_spacing=gate_spacing)
+#    sweep_range = [radar.sweep_start_ray_index['data'][0],
+#               radar.sweep_end_ray_index['data'][0]+1]
+#
+#    turbulence[sweep_range[0]:sweep_range[1]] = \
+#    _calc_turb_rhi_sweep(
+#                         radar, index, radius=radius, verbose=verbose,
+#                         name_dz=name_dz, name_sw=name_sw,
+#                         use_ntda=use_ntda, beamwidth=beamwidth,
+#                         gate_spacing=gate_spacing)
 
     turbulence = _finalize_turb_field(radar, turbulence, name_dz, name_sw)
     add_turbulence_field(radar, turbulence, turb_name)
