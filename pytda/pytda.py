@@ -390,7 +390,7 @@ def calc_turb_rhi(radar, radius=1.0, verbose=False,
     if beamwidth is None:
         beamwidth = radar.instrument_parameters['radar_beam_width_v']['data']
 
-#    index = 0
+    index = 0
 #    while index < radar.nsweeps:
 #        if verbose:
 #            print('Sweep number:', index)
